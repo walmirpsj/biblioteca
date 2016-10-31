@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Consulta de Periódicos</ui:define>
+	
+	<ui:define name="corpo">
+		<h1>Consulta de Periódicos</h1>
+		<h:form id="frm">
+		<p:messages showDetail="false" showSummary="true" globalOnly="false" autoUpdate="true" closable="true" />
+			<p:dataTable value="#{periodicoBean.periodicos}" border="1" cellspacing="0" cellpadding="2" rowClasses="row1, row2"
+					 paginator="true" rows="5" paginatorPosition="bottom" styleClass="listagem" var="periodico" rendered="#{not empty periodicoBean.periodicos}"  >
+				<p:column headerText="Título" styleClass="txt-center">
+					<h:outputText value="#{periodico.titulo}" />
+				</p:column>
+				<p:column headerText="Tipo de Periódico" styleClass="txt-center">
+					<h:outputText value="#{periodico.tipoPeriodico}" />
+				</p:column>
+				<p:column headerText="Frequência do Periódico" styleClass="txt-center">
+					<h:outputText value="#{periodico.frequenciaPeriodico}" />
+				</p:column>
+				<p:column headerText="Autor" styleClass="txt-center">
+					<h:outputText value="#{periodico.autor}" />
+				</p:column>
+				<p:column headerText="ISSN" styleClass="txt-center">
+					<h:outputText value="#{periodico.issn}" />
+				</p:column>
+				<p:column headerText="Assunto" styleClass="txt-center">
+					<h:outputText value="#{periodico.assunto}" />
+				</p:column>
+				<p:column headerText="Data de Publicação" styleClass="txt-center">
+					<h:outputText value="#{periodico.dataPublicacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Ações" styleClass="txt-center" width="140">
+					<p:button icon="ui-icon-pencil" title="Editar" outcome="/cadastrarPeriodico">
+						<f:param name="id" value="#{periodico.idPeriodico}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" process="@this" update="@form" action="#{periodicoBean.excluir}">
+						<f:setPropertyActionListener value="#{periodico}"	target="#{periodicoBean.periodicoSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:panelGrid columns="1">
+			 	<p:commandButton value="Novo Periódico" action="#{periodicoBean.novo}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

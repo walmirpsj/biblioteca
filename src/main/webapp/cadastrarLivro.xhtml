@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="id" value="#{livroBean.livro}" />
+	</f:metadata>
+	
+	<ui:define name="titulo">Cadastro de Livros</ui:define>
+	<ui:define name="corpo">
+		<h1>Cadastro de Livro</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel for="titulo" value="Título:" />
+				<p:inputText id="titulo" value="#{livroBean.livro.titulo}" size="60" required="true" requiredMessage="O campo Título é obrigatório.">
+					<f:validateLength minimum="6"></f:validateLength>
+				</p:inputText>
+				
+				<p:outputLabel for="autor" value="Autor:" />
+				<p:inputText id="autor" size="60" value="#{livroBean.livro.autor}" required="true" requiredMessage="O campo Autor é obrigatório."/>
+				
+				<p:outputLabel for="isbn" value="ISBN:" />
+				<p:inputText id="isbn" value="#{livroBean.livro.isbn}" size="15" required="true" requiredMessage="O campo ISBN é obrigatório."/>
+				
+				<p:outputLabel for="assunto" value="Assunto:" />
+				<p:inputText id="assunto" size="40" value="#{livroBean.livro.assunto}"/>
+				
+				<p:outputLabel for="editora" value="Editora:" />
+				<p:inputText id="editora" size="40" value="#{livroBean.livro.editora}"/>
+				
+				<p:outputLabel for="anoPublic" value="Ano Publicação:" />
+				<p:inputText id="anoPublic" size="4" value="#{livroBean.livro.anoPublicacao}" required="true" requiredMessage="O campo Ano Publicação é obrigatório."/>
+				
+				<p:commandButton value="Salvar"	action="#{livroBean.salvar}" update="@form" />
+				<p:commandButton value="Retornar" action="/consultaLivros?faces-redirect=true" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

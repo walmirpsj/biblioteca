@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Consulta de Livros</ui:define>
+	
+	<ui:define name="corpo">
+		<h1>Consulta de Livros</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" globalOnly="false" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel for="titulo" value="Título:" />
+				<p:inputText id="titulo" value="#{livroBean.livro.titulo}" size="60" />
+				
+				<p:outputLabel for="autor" value="Autor:" />
+				<p:inputText id="autor" size="60" value="#{livroBean.livro.autor}" />
+				
+				<p:outputLabel for="isbn" value="ISBN:" />
+				<p:inputMask id="isbn" value="#{livroBean.livro.isbn}" size="15" />
+				
+				<p:outputLabel for="assunto" value="Assunto:" />
+				<p:inputText id="assunto" size="40" value="#{livroBean.livro.assunto}"/>
+				
+				<p:outputLabel for="editora" value="Editora:" />
+				<p:inputText id="editora" size="40" value="#{livroBean.livro.editora}"/>
+				
+				<p:outputLabel for="anoPublic" value="Ano Publicação:" />
+				<p:spinner id="anoPublic" min="1912" max="2016" size="4" value="#{livroBean.livro.anoPublicacao}" />
+				
+				<p:commandButton value="Pesquisar"	actionListener="#{livroBean.pesquisar}" ajax="true" update="@form" />
+				<p:commandButton value="Limpar"	actionListener="#{livroBean.clean}" ajax="true" update="@form" />
+			</h:panelGrid>
+			<p:dataTable value="#{livroBean.livros}" border="1" cellspacing="0" cellpadding="2" rowClasses="row1, row2"
+					 paginator="true" rows="5" paginatorPosition="bottom" styleClass="listagem" var="livro" rendered="#{not empty livroBean.livros}"  >
+				<p:column headerText="Título" styleClass="txt-center">
+					<h:outputText value="#{livro.titulo}" />
+				</p:column>
+				<p:column headerText="ISBN" styleClass="txt-center">
+					<h:outputText value="#{livro.isbn}" />
+				</p:column>
+				<p:column headerText="Assunto" styleClass="txt-center">
+					<h:outputText value="#{livro.assunto}" />
+				</p:column>
+				<p:column headerText="Autor" styleClass="txt-center">
+					<h:outputText value="#{livro.autor}" />
+				</p:column>
+				<p:column headerText="Ano de Publicação" styleClass="txt-center">
+					<h:outputText value="#{livro.anoPublicacao}" />
+				</p:column>
+				<p:column headerText="Ações" styleClass="txt-center" width="140">
+					<p:button icon="ui-icon-pencil" title="Editar" outcome="/cadastrarLivro">
+						<f:param name="id" value="#{livro.idLivro}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" process="@this" update="@form" action="#{livroBean.excluir}">
+						<f:setPropertyActionListener value="#{livro}"	target="#{livroBean.livroSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

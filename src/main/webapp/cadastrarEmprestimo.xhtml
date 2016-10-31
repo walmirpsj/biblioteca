@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="id" value="#{emprestimoBean.emprestimo}" />
+	</f:metadata>
+	
+	<ui:define name="titulo">Cadastro de Empréstimo</ui:define>
+	<ui:define name="corpo">
+		<h1>Cadastro de Empréstimo</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Pessoa:" for="pessoa" />
+				<p:selectOneMenu value="#{emprestimoBean.emprestimo.pessoa}" id="pessoa">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{emprestimoBean.pessoas}" var="pessoa" itemValue="#{pessoa}" itemLabel="#{pessoa.nome}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="livro:" for="livro" />
+				<p:selectOneMenu value="#{emprestimoBean.emprestimo.livro}" id="livro">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{emprestimoBean.livros}" var="livro" itemValue="#{livro}" itemLabel="#{livro.titulo}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="periodico:" for="periodico" />
+				<p:selectOneMenu value="#{emprestimoBean.emprestimo.periodico}" id="periodico">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{emprestimoBean.periodicos}" var="periodico" itemValue="#{periodico}" itemLabel="#{periodico.titulo}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Data do Empréstimo:" for="dataEmprestimo" />
+				<p:calendar id="dataEmprestimo" size="12" pattern="dd/MM/yyyy" value="#{emprestimoBean.emprestimo.dataEmprestimo}" converter="converterData" />
+				
+				<p:outputLabel value="Data de Devolução:" for="dataDevolucao" />
+				<p:calendar id="dataDevolucao" size="12" pattern="dd/MM/yyyy" value="#{emprestimoBean.emprestimo.dataDevolucao}" converter="converterData" />
+				
+				<p:outputLabel value="Observação:" for="observacao" />
+				<p:inputTextarea id="observacao" cols="30" rows="5"	value="#{emprestimoBean.emprestimo.observacao}" />
+				
+				<p:commandButton value="Salvar"	action="#{emprestimoBean.salvar}" update="@form" />
+				<p:commandButton value="Retornar" action="#{emprestimoBean.cancelar}" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

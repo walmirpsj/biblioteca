@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<title>
+		<ui:insert name="titulo">Sistema de Acervo de Biblioteca</ui:insert>
+	</title>
+	<h:outputStylesheet library="especializacao" name="estilo.css" />
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+</h:head>
+<h:body>
+	<header>
+		<h:graphicImage library="especializacao" name="logo-barra.png" height="34" />
+		<div style="float: right; margin-right: 20px; margin-top: 8px">
+			Usuário: #{loginBean.usuarioSession.nome}
+		</div>
+	</header>
+	<h:form>
+		<p:menubar style="margin-top: -20px; margin-bottom: 20px" >
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Usuário" action="/cadastrarUsuario?faces-redirect=true" />
+				<p:menuitem value="Pessoa" action="/cadastrarPessoa?faces-redirect=true" />
+				<p:menuitem value="Livro"	action="/cadastrarLivro?faces-redirect=true" />
+				<p:menuitem value="Periódico" action="/cadastrarPeriodico?faces-redirect=true" />
+				<p:menuitem value="Empréstimo" action="/cadastrarEmprestimo?faces-redirect=true" />
+			</p:submenu>
+			<p:submenu label="Consultas">
+				<p:menuitem value="Usuários" action="/consultaUsuarios?faces-redirect=true" />
+				<p:menuitem value="Pessoas"	action="/consultaPessoas?faces-redirect=true" />
+				<p:menuitem value="Livros"	action="/consultaLivros?faces-redirect=true" />
+				<p:menuitem value="Periódicos" action="/consultaPeriodicos?faces-redirect=true" />
+				<p:menuitem value="Empréstimos" action="/consultaEmprestimos?faces-redirect=true" />
+			</p:submenu>
+			<p:submenu label="Sistema">
+				<p:menuitem value="Sair" action="#{loginBean.logout}" />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+	<footer> Sistema de Acervo de Biblioteca </footer>
+</h:body>
+</html>

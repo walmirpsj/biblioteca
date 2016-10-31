@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="id" value="#{periodicoBean.periodico}" />
+	</f:metadata>
+	
+	<ui:define name="titulo">Cadastro de Periódicos</ui:define>
+	<ui:define name="corpo">
+		<h1>Cadastro de Periódicos</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel for="titulo" value="Título:" />
+				<p:inputText id="titulo" value="#{periodicoBean.periodico.titulo}" size="60" required="true" requiredMessage="O campo Título é obrigatório.">
+					<f:validateLength minimum="6"></f:validateLength>
+				</p:inputText>
+				
+				<p:outputLabel for="autor" value="Autor:" />
+				<p:inputText id="autor" size="60" value="#{periodicoBean.periodico.autor}" required="true" requiredMessage="O campo Autor é obrigatório."/>
+				
+				<p:outputLabel value="Tipo de Periódico:" for="tipoPeriodico" />
+				<p:selectOneMenu value="#{periodicoBean.periodico.tipoPeriodico}" id="tipoPeriodico">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{periodicoBean.tiposPeriodicos}"
+									   var="tipoPeri" itemValue="#{tipoPeri}" itemLabel="#{tipoPeri.descricao}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Frequência do Periódico:" for="FreqPeriodico" />
+				<p:selectOneMenu value="#{periodicoBean.periodico.frequenciaPeriodico}" id="FreqPeriodico">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{periodicoBean.frequenciasPeriodicos}"
+									   var="freqPeri" itemValue="#{freqPeri}" itemLabel="#{freqPeri.descricao}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="issn" value="ISSN:" />
+				<p:inputText id="issn" value="#{periodicoBean.periodico.issn}" size="15" required="true" requiredMessage="O campo ISSN é obrigatório."/>
+				
+				<p:outputLabel for="assunto" value="Assunto:" />
+				<p:inputText id="assunto" size="40" value="#{periodicoBean.periodico.assunto}"/>
+				
+				<p:outputLabel for="dataPublic" value="Data de Publicação:" />
+				<p:calendar id="dataPublic" size="12" pattern="dd/MM/yyyy" value="#{periodicoBean.periodico.dataPublicacao}" required="true" converter="converterData"/>
+				
+				<p:commandButton value="Salvar"	action="#{periodicoBean.salvar}" update="@form" />
+				<p:commandButton value="Retornar" action="/consultaPeriodicos?faces-redirect=true" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

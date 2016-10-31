@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Consulta de Usuários do Sistema</ui:define>
+	
+	<ui:define name="corpo">
+		<h1>Consulta de Usuários</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" globalOnly="false" autoUpdate="true" closable="true" />
+			<p:dataTable value="#{usuarioBean.usuarios}" border="1" cellspacing="0" cellpadding="2" rowClasses="row1, row2"
+					 paginator="true" rows="5" paginatorPosition="bottom" styleClass="listagem" var="usuario" rendered="#{not empty usuarioBean.usuarios}"  >
+				<p:column headerText="Nome" styleClass="txt-center">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				<p:column headerText="Username" styleClass="txt-center">
+					<h:outputText value="#{usuario.username}" />
+				</p:column>
+				<p:column headerText="Ações" styleClass="txt-center" width="140">
+					<p:button icon="ui-icon-pencil" title="Editar" outcome="/cadastrarUsuario">
+						<f:param name="id" value="#{usuario.idUsuario}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" process="@this" update="@form" action="#{usuarioBean.excluir}">
+						<f:setPropertyActionListener value="#{usuario}"	target="#{usuarioBean.usuarioSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:panelGrid columns="1">
+			 	<p:commandButton value="Novo Usuário" action="#{usuarioBean.novo}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

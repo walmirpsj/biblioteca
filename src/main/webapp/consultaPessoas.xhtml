@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Consulta de Pessoas</ui:define>
+	
+	<ui:define name="corpo">
+		<h1>Consulta de Pessoas</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" globalOnly="false" autoUpdate="true" closable="true" />
+			<p:dataTable value="#{pessoaBean.pessoas}" border="1" cellspacing="0" cellpadding="2" rowClasses="row1, row2"
+					 paginator="true" rows="5" paginatorPosition="bottom" styleClass="listagem" var="pessoa" rendered="#{not empty pessoaBean.pessoas}" >
+				<p:column headerText="Nome" styleClass="txt-center">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+				<p:column headerText="E-mail" styleClass="txt-center">
+					<h:outputText value="#{pessoa.email}" />
+				</p:column>
+				<p:column headerText="Telefone" styleClass="txt-center">
+					<h:outputText value="#{pessoa.telefone}" />
+				</p:column>
+				<p:column headerText="Endereço" styleClass="txt-center">
+					<h:outputText value="#{pessoa.endereco}" />
+				</p:column>
+				<p:column headerText="Ações" styleClass="txt-center" width="140">
+					<p:button icon="ui-icon-pencil" title="Editar" outcome="/cadastrarPessoa">
+						<f:param name="id" value="#{pessoa.idPessoa}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" process="@this" update="@form" action="#{pessoaBean.excluir}">
+						<f:setPropertyActionListener value="#{pessoa}"	target="#{pessoaBean.pessoaSelecionada}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:panelGrid columns="1">
+			 	<p:commandButton value="Nova Pessoa" action="#{pessoaBean.novo}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

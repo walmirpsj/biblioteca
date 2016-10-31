@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="id" value="#{pessoaBean.pessoa}" />
+	</f:metadata>
+	
+	<ui:define name="titulo">Cadastro de Pessoas</ui:define>
+	<ui:define name="corpo">
+		<h1>Cadastro de Pessoa</h1>
+		<h:form id="frm">
+			<p:messages showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" value="#{pessoaBean.pessoa.nome}" size="40" required="true" 
+							 requiredMessage="O campo Nome é obrigatório." validatorMessage="Preencha no min 6 caracteres.">
+					<f:validateLength minimum="6"></f:validateLength>		 
+				</p:inputText>
+				
+				<p:outputLabel for="email" value="E-mail:" />
+				<p:inputText id="email" value="#{pessoaBean.pessoa.email}" size="40" required="true" 
+							 requiredMessage="O campo E-mail é obrigatório." validatorMessage="* Coloque um e-mail válido.">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+				</p:inputText>
+				
+				<p:outputLabel for="telefone" value="Telefone:" />
+				<p:inputMask id="telefone" mask="(99)99999-9999" size="14" value="#{pessoaBean.pessoa.telefone}"/>
+				
+				<p:outputLabel for="endereco" value="Endereço:" />
+				<p:inputText id="endereco" size="60" value="#{pessoaBean.pessoa.endereco}" required="true" requiredMessage="O campo Endereço é obrigatório."/>
+				
+				<p:commandButton value="Salvar"	action="#{pessoaBean.salvar}" update="@form" />
+				<p:commandButton value="Retornar" action="/consultaPessoas?faces-redirect=true" immediate="true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
